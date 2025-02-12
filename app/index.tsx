@@ -1,6 +1,8 @@
-import { Image, StyleSheet, Platform, View, Text, KeyboardAvoidingView } from 'react-native';
+import { Image, StyleSheet, Platform, View, Text, KeyboardAvoidingView, Pressable } from 'react-native';
 import { useState } from 'react';
 import { TextInput, Button } from 'react-native';
+import { router } from 'expo-router';
+
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -9,36 +11,42 @@ export default function LoginScreen() {
     // Here you would typically handle the login logic
     console.log('Login attempt:', { username, password });
     // For now, just clear the fields
-    setUsername('');
-    setPassword('');
+    // Navigate to the chat screen
+    // Assuming you have a navigation prop available
+    router.replace('/chats');
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView 
+      style={styles.container} 
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
+    >
       <Text style={styles.title}>Bienvenido a GlobalChat!</Text>
-      <TextInput
-      style={styles.input}
-      placeholder="Username"
-      placeholderTextColor="#888"
-      value={username}
-      onChangeText={setUsername}
-      />
-      <TextInput
-      style={styles.input}
-      placeholder="Password"
-      placeholderTextColor="#888"
-      secureTextEntry={true}
-      value={password}
-      onChangeText={setPassword}
-      />
-      <View style={[styles.buttonContainer, (!username || !password) && { backgroundColor: 'gray' }]}>
-      <Button 
-        title="Login" 
-        onPress={handleLogin} 
-        disabled={!username || !password}  
-        color="#fff"
-      />
+      <View style={{ alignItems: 'center', marginBottom: 16 }}>
+        <Image source={require('../assets/images/global.png')} style={{ width: '100%', height: undefined, aspectRatio: 1.5 }} resizeMode="contain" />
       </View>
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        placeholderTextColor="#888"
+        value={username}
+        onChangeText={setUsername}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        placeholderTextColor="#888"
+        secureTextEntry={true}
+        value={password}
+        onChangeText={setPassword}
+      />
+      <Pressable 
+        style={[styles.buttonContainer, (!username || !password) && { backgroundColor: 'gray' }]} 
+        onPress={handleLogin} 
+        disabled={!username || !password}
+      >
+        <Text style={{ color: '#fff' }}>Login</Text>
+      </Pressable>
       </KeyboardAvoidingView>
 
   );
