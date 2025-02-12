@@ -1,24 +1,32 @@
 import React from 'react';
-import { ScrollView, View, Text, StyleSheet, Image } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import { Chat } from '../constants/Mocks';
 import { SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { router } from 'expo-router';
 
 
+const ChatItem = ({ chat }) => {
 
-const ChatItem = ({ chat }) => (
-    <View style={styles.chatItem}>
-        {/* Dejo abierto a que eventualmente los contactos tengan una imagen, si no muestra una default*/}
-        <Image source={chat.avatar ? { uri: chat.avatar } : require('../assets/images/default-image.png')} style={styles.avatar} />
-        <View style={styles.chatInfo}>
-            <View style={styles.chatHeader}>
+    return (
+        <TouchableOpacity onPress={() => router.navigate({
+            pathname: '/specificChat',
+            params: { contact: chat.contact },
+        })}>
+            <View style={styles.chatItem}>
+            {/* Dejo abierto a que eventualmente los contactos tengan una imagen, si no muestra una default*/}
+            <Image source={chat.avatar ? { uri: chat.avatar } : require('../assets/images/default-image.png')} style={styles.avatar} />
+            <View style={styles.chatInfo}>
+                <View style={styles.chatHeader}>
                 <Text style={styles.chatName}>{chat.contact}</Text>
                 <Text style={styles.chatMessageHour}>{chat.lastMessageTime}</Text>
+                </View>
+                <Text style={styles.chatMessageHour}>{chat.lastMessage}</Text>
             </View>
-            <Text style={styles.chatMessageHour}>{chat.lastMessage}</Text>
-        </View>
-    </View>
-);
+            </View>
+        </TouchableOpacity>
+    );
+};
 
 const Chats = () => {
     return (
