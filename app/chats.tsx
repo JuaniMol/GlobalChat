@@ -3,7 +3,7 @@ import { ScrollView, View, Text, StyleSheet, Image, TouchableOpacity } from 'rea
 import { Chat } from '../constants/Mocks';
 import { SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { router, useLocalSearchParams } from 'expo-router';
+import { router } from 'expo-router';
 
 
 interface ChatItemProps {

@@ -1,6 +1,6 @@
 import { Image, StyleSheet, Platform, View, Text, KeyboardAvoidingView, Pressable } from 'react-native';
 import { useState } from 'react';
-import { TextInput, Button } from 'react-native';
+import { TextInput } from 'react-native';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

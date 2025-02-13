@@ -1,50 +1,39 @@
-# Welcome to your Expo app 👋
+# Bienvenidos a GloalChat 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Esta es una app mobile hecha con [Expo](https://expo.dev) usando el comando [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-## Get started
+## Instrucciones para ejecutar
 
-1. Install dependencies
+1. Instala las dependencias
 
    ```bash
    npm install
    ```
 
-2. Start the app
+2. Inicia la app
 
    ```bash
     npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+Como salida abre un servidor de expo que se puede correr en simuladores. Yo recomiendo bajarse en iOS o Android la app de Expo Go y escanear el código QR de la consola
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- [Expo Go](https://expo.dev/go)
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Decisiones más importantes
 
-## Get a fresh project
+1. Decidí guardar los datos del usuario en el async storage para podes acceder más facil desde otra pantalla como `editProfile.tsx`, si tuviera un backend seguro guardaria solo en el async storage el token JWT u otro método utilizado para distinguir al usuario desde el backend.
 
-When you're ready, run:
+2. Me parecio raro en el mockup la data de UserProfile ya que hace referencia a John, que es un contacto del usuario y tiene informacion de lo que seria una pantalla de ver la data de ese contacto. Primero pensé que se referia al usuario logueado. Finalmente para editar el perfil del usuario decidí considerar el Nombre como el Username ingresado en el login.
 
-```bash
-npm run reset-project
-```
+3. Dejé abierta la posibilidad en la pantalla `chats.tsx` de que los usuarios tengan su propia foto de perfil. En el momento que el backend envie la url de la foto, será mostrada. Caso contrario, muestra una foto default.
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+4. Las librerias externas que utilicé son:
 
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+   - `expo-router` para la navegación entre pantallas.
+   - `react-native-vector-icons` para iconos en botones.
+   - `expo-image-picker` para seleccionar una imagen desde la galería.
+   - `@react-native-async-storage/async-storage` para guardar en el dispositivo información del usuario.

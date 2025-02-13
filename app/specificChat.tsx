@@ -9,9 +9,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 const SpecificChat = () => {
 
-    const contact = useLocalSearchParams().contact;
+    const contact = Array.isArray(useLocalSearchParams().contact) ? useLocalSearchParams().contact[0] : useLocalSearchParams().contact;
     const [message, setMessage] = useState('');
-    const chat = Chat.specificChats.find(chat => chat.contact == contact);
+    let chat = Chat.specificChats.find(chat => chat.contact == contact);
+    if (!chat) {
+        chat = { contact: contact as string, messages: [] };
+        Chat.specificChats.push(chat);
+    }
 
     const renderItem = ({ item }: { item: { sender: string; content: string; time: string; } }) => (
         <View style={[styles.messageContainer, item.sender === 'You' ? styles.myMessage : styles.otherMessage]}>
@@ -21,7 +25,6 @@ const SpecificChat = () => {
     );
 
     const handleSend = () => {
-        if (message.trim() === '') return;
 
         const newMessage = {
             sender: 'You',
@@ -47,7 +50,7 @@ const SpecificChat = () => {
                 <FlatList
                     data={chat?.messages}
                     renderItem={renderItem}
-                    keyExtractor={item => item.time + item.content} 
+                    keyExtractor={(item, index) => `${item.sender}-${item.time}-${index}`}
                     style={styles.chatContainer}
                 />
                 <View style={styles.inputContainer}>

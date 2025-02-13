@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Image, Pressable } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Image, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
-import { useLocalSearchParams } from 'expo-router';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -73,12 +72,15 @@ const EditProfile = () => {
                 <Text style={styles.header}>Editar Perfil</Text>
             </View>
             <View style={{ padding: 20 }}>
+            <Text style= {styles.labelText}>Foto de Perfil: </Text>
                 <View style={{ position: 'relative' }}>
+                    
                 <Image source={profileImage ? { uri: profileImage } : require('../assets/images/default-image.png')} style={styles.profileImage} />
                 <Pressable style={styles.cameraButton} onPress={() => {handlePickImage()}}>
                     <Icon name="camera" style={styles.cameraIcon} />
                 </Pressable>
                 </View>
+                <Text style= {styles.labelText}>Nombre de Usuario: </Text>
                 <TextInput
                 style={styles.input}
                 placeholder="Name"
@@ -106,7 +108,7 @@ const styles = StyleSheet.create({
     },
     profileImage: {
         width: '100%',
-        height: 250,
+        aspectRatio: 1,
         marginBottom: 20,
     },
     cameraButton: {
@@ -130,6 +132,11 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginBottom: 20,
         paddingHorizontal: 10,
+    },
+    labelText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 10,
     },
     saveButton: {
         backgroundColor: '#007BFF',
