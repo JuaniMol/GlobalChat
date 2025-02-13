@@ -9,8 +9,6 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    console.log('Login attempt:', { username, password });
-    router.replace('/chats');
     const storeUsername = async (username: string) => {
       try {
         await AsyncStorage.setItem('username', username);
@@ -20,6 +18,8 @@ export default function LoginScreen() {
     };
 
     storeUsername(username);
+
+    router.replace('/chats');
   };
 
   return (
@@ -47,6 +47,7 @@ export default function LoginScreen() {
         onChangeText={setPassword}
       />
       <Pressable 
+      //Valido que los campos no esten vacios
         style={[styles.buttonContainer, (!username || !password) && { backgroundColor: 'gray' }]} 
         onPress={handleLogin} 
         disabled={!username || !password}
@@ -54,7 +55,6 @@ export default function LoginScreen() {
         <Text style={{ color: '#fff' }}>Login</Text>
       </Pressable>
       </KeyboardAvoidingView>
-
   );
 }
 
