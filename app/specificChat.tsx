@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
         flexDirection: 'row',
-        alignItems: 'center', // Center the content vertically
+        alignItems: 'center',
     },
     tabText: {
         fontSize: 30,

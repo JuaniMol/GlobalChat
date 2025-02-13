@@ -3,10 +3,20 @@ import { ScrollView, View, Text, StyleSheet, Image, TouchableOpacity } from 'rea
 import { Chat } from '../constants/Mocks';
 import { SafeAreaView } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 
 
-const ChatItem = ({ chat }) => {
+interface ChatItemProps {
+    chat: {
+        id: number;
+        contact: string;
+        avatar?: string;
+        lastMessage: string;
+        lastMessageTime: string;
+    };
+}
+
+const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
 
     return (
         <TouchableOpacity onPress={() => router.navigate({
@@ -29,11 +39,14 @@ const ChatItem = ({ chat }) => {
 };
 
 const Chats = () => {
+
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.tabContainer}>
                 <Text style={styles.tabText}>GlobalChat</Text>
-                <Icon name="settings-outline" size={24} color="white" style={styles.editProfile} onPress={() => alert('Edit Profile')} />
+                <Icon name="settings-outline" size={24} color="white" style={styles.editProfile} 
+                onPress={() =>
+                     router.navigate('/editProfile')} />
             </View>
             <ScrollView>
                 {Chat.chats.map(chat => (

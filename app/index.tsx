@@ -2,18 +2,24 @@ import { Image, StyleSheet, Platform, View, Text, KeyboardAvoidingView, Pressabl
 import { useState } from 'react';
 import { TextInput, Button } from 'react-native';
 import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // Here you would typically handle the login logic
     console.log('Login attempt:', { username, password });
-    // For now, just clear the fields
-    // Navigate to the chat screen
-    // Assuming you have a navigation prop available
     router.replace('/chats');
+    const storeUsername = async (username: string) => {
+      try {
+        await AsyncStorage.setItem('username', username);
+      } catch (e) {
+        console.error('Failed to save the username to the storage', e);
+      }
+    };
+
+    storeUsername(username);
   };
 
   return (
