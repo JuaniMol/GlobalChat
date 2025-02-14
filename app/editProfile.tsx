@@ -32,6 +32,7 @@ const EditProfile = () => {
 
     const  handleSave = async () => {
         try {
+            // Guardo la nueva informacion
             await AsyncStorage.setItem('username', name);
             if (profileImage) {
             await AsyncStorage.setItem('profileImage', profileImage);
@@ -39,6 +40,8 @@ const EditProfile = () => {
         } catch (error) {
             console.error('Failed to save data to storage', error);
         }
+
+        // Volvemos a los chats
         router.replace( '/chats');
     };
 

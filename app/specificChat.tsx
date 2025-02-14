@@ -17,6 +17,7 @@ const SpecificChat = () => {
   }
 
   const renderItem = useCallback(({ item }: { item: { sender: string; content: string; time: string; } }) => (
+    // Doy estilos a los mensajes segun quien es el emisor
     <View style={[styles.messageContainer, item.sender === 'You' ? styles.myMessage : styles.otherMessage]}>
       <Text style={styles.messageText}>{item.content}</Text>
       <Text style={styles.messageTime}>{item.time}</Text>

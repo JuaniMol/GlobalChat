@@ -19,6 +19,7 @@ export default function LoginScreen() {
 
     storeUsername(username);
 
+    // Uso replace para que no se pueda volver al login desde los chats
     router.replace('/chats');
   };
 
