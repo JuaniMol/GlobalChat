@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ThemedText } from '@/components/ThemedText';
 
 const EditProfile = () => {
     const [name, setName] = useState('');
@@ -71,11 +72,10 @@ const EditProfile = () => {
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.tabContainer}>
-
                 <Text style={styles.header}>Editar Perfil</Text>
             </View>
             <View style={{ padding: 20 }}>
-            <Text style= {styles.labelText}>Foto de Perfil: </Text>
+            <ThemedText style= {styles.labelText}>Foto de Perfil: </ThemedText>
                 <View style={{ position: 'relative' }}>
                     
                 <Image source={profileImage ? { uri: profileImage } : require('../assets/images/default-image.png')} style={styles.profileImage} />
@@ -83,7 +83,7 @@ const EditProfile = () => {
                     <Icon name="camera" style={styles.cameraIcon} />
                 </Pressable>
                 </View>
-                <Text style= {styles.labelText}>Nombre de Usuario: </Text>
+                <ThemedText style= {styles.labelText}>Nombre de Usuario: </ThemedText>
                 <TextInput
                 style={styles.input}
                 placeholder="Name"
@@ -91,7 +91,7 @@ const EditProfile = () => {
                 onChangeText={setName}
                 />
                 <Pressable style={styles.saveButton} onPress={handleSave}>
-                <Text style={styles.cameraIcon}>Guardar</Text>
+                <ThemedText style={styles.cameraIcon}>Guardar</ThemedText>
                 </Pressable>
             </View>
             
