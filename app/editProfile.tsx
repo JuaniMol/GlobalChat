@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Image, Pressable } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Image, Pressable, Platform } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
@@ -108,7 +108,8 @@ const styles = StyleSheet.create({
     },
     profileImage: {
         width: '100%',
-        aspectRatio: 1,
+        height: 300,
+        resizeMode: 'contain',
         marginBottom: 20,
     },
     cameraButton: {
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
       borderBottomColor: '#ccc',
       flexDirection: 'row',
       alignItems: 'center'
-      }
+    }
 });
 
 export default EditProfile;

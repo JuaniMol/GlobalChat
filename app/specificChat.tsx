@@ -48,7 +48,7 @@ const SpecificChat = () => {
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      keyboardVerticalOffset={-30}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? -30: 0}
     >
       <SafeAreaView style={styles.container}>
         <View style={styles.tabContainer}>
