@@ -1,6 +1,12 @@
-# Bienvenidos a GloalChat 👋
+# Bienvenidos a GlobalChat 👋
 
-Esta es una app mobile hecha con [Expo](https://expo.dev) usando el comando [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Esta es una app móvil hecha con [Expo](https://expo.dev) usando el comando [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+
+## Requerimientos
+
+- Node.js versión 16 o superior
+- npm o yarn
+- Un dispositivo móvil o emulador para pruebas
 
 ## Instrucciones para ejecutar
 
@@ -16,24 +22,37 @@ Esta es una app mobile hecha con [Expo](https://expo.dev) usando el comando [`cr
     npx expo start
    ```
 
-Como salida abre un servidor de expo que se puede correr en simuladores. Yo recomiendo bajarse en iOS o Android la app de Expo Go y escanear el código QR de la consola
+Como salida se abre un servidor de Expo que se puede ejecutar en simuladores. Se recomienda descargar en iOS o Android la app de Expo Go y escanear el código QR de la consola.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+Enlaces útiles:
+- [Development build](https://docs.expo.dev/develop/development-builds/introduction/)
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go)
 
-## Decisiones más importantes
+## Estructura del proyecto
 
-1. Decidí guardar los datos del usuario en el async storage para podes acceder más facil desde otra pantalla como `editProfile.tsx`, si tuviera un backend seguro guardaria solo en el async storage el token JWT u otro método utilizado para distinguir al usuario desde el backend.
+```
+src/
+├── components/    # Componentes reutilizables
+├── app/           # Pantallas principales
+├── hooks/         # Custom hooks
+├── styles/        # Estilos compartidos
+└── assets/        # Imagenes y fuentes
+```
 
-2. Me parecio raro en el mockup la data de UserProfile ya que hace referencia a John, que es un contacto del usuario y tiene informacion de lo que seria una pantalla de ver la data de ese contacto. Primero pensé que se referia al usuario logueado. Finalmente para editar el perfil del usuario decidí considerar el Nombre como el Username ingresado en el login.
+## Decisiones técnicas
 
-3. Dejé abierta la posibilidad en la pantalla `chats.tsx` de que los usuarios tengan su propia foto de perfil. En el momento que el backend envie la url de la foto, será mostrada. Caso contrario, muestra una foto default.
+1. Almacenamiento local: Se utiliza async storage para guardar los datos del usuario y facilitar el acceso desde diferentes pantallas como `editProfile.tsx`. En un entorno de producción, yo recomendaría almacenar únicamente tokens de autenticación (JWT) en el almacenamiento local.
 
-4. Las librerias externas que utilicé son:
+2. Perfil de usuario: La implementación del perfil considera el nombre de usuario (Username) ingresado en el login como identificador principal del usuario.
 
-   - `expo-router` para la navegación entre pantallas.
-   - `react-native-vector-icons` para iconos en botones.
-   - `expo-image-picker` para seleccionar una imagen desde la galería.
-   - `@react-native-async-storage/async-storage` para guardar en el dispositivo información del usuario.
+3. Imágenes de perfil: La pantalla `chats.tsx` está preparada para mostrar fotos de perfil personalizadas. Por defecto, muestra una imagen predeterminada hasta que el backend proporcione las URLs correspondientes.
+
+4. Librerías principales:
+   - `expo-router`: Navegación entre pantallas
+   - `react-native-vector-icons`: Iconos para la interfaz
+   - `expo-image-picker`: Selección de imágenes desde la galería
+   - `@react-native-async-storage/async-storage`: Almacenamiento local
+
+5. Arquitectura: Se implementó una estructura modular con componentes atómicos reutilizables, hooks personalizados y estilos compartidos para mejorar la mantenibilidad y escalabilidad del código.

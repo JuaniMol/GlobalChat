@@ -6,10 +6,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { COLORS, SPACING } from '../styles/theme';
 
+/**
+ * Pantalla de inicio de sesión
+ * Esta es la primera pantalla que ve el usuario al abrir la aplicación
+ * Maneja la autenticación básica con username y password
+ */
+
 export default function LoginScreen() {
+  // Estado local para los campos del formulario
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
+  /**
+   * Maneja el proceso de inicio de sesión
+   * Guarda el username en AsyncStorage y navega a la pantalla de chats
+   */
   const handleLogin = () => {
     const storeUsername = async (username: string) => {
       try {

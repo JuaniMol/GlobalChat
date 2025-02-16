@@ -7,11 +7,19 @@ import { Chat } from '../constants/Mocks';
 import { ChatItem } from '../components/chats/chatItem';
 import { COLORS, SPACING } from '../styles/theme';
 
+/**
+ * Pantalla principal de chats
+ * Muestra la lista de conversaciones del usuario
+ * Permite navegar a la edición de perfil
+ */
+
 const Chats = () => {
     return (
         <SafeAreaView style={styles.container}>
+            {/* Header con título y botón de configuración */}
             <View style={styles.tabContainer}>
                 <Text style={styles.tabText}>GlobalChat</Text>
+                {/* Botón para navegar a la edición de perfil */}
                 <Icon 
                     name="settings-outline" 
                     size={24} 
@@ -20,6 +28,7 @@ const Chats = () => {
                     onPress={() => router.navigate('/editProfile')} 
                 />
             </View>
+            {/* Lista scrolleable de chats */}
             <ScrollView>
                 {Chat.chats.map(chat => (
                     <ChatItem key={chat.id} chat={chat} />
