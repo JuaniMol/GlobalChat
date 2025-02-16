@@ -4,6 +4,7 @@ import { TextInput } from 'react-native';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { COLORS, SPACING } from '../styles/theme';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
@@ -31,52 +32,50 @@ export default function LoginScreen() {
       keyboardVerticalOffset={Platform.OS === 'ios' ? -32 : -10}
     >
       <SafeAreaView>
-
-
-      <ScrollView 
-        contentContainerStyle={styles.scrollContainer}
-        showsVerticalScrollIndicator={false}
-        bounces={false}
-        keyboardShouldPersistTaps="handled"
-      >
-        <Text style={styles.title}>Bienvenido a GlobalChat!</Text>
-        <View style={styles.imageContainer}>
-          <Image 
-            source={require('../assets/images/global.png')} 
-            style={styles.logo} 
-            resizeMode="contain" 
-          />
-        </View>
-        <TextInput
-          style={styles.input}
-          placeholder="Username"
-          placeholderTextColor="#999"
-          value={username}
-          onChangeText={setUsername}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Password"
-          placeholderTextColor="#999"
-          secureTextEntry={true}
-          value={password}
-          onChangeText={setPassword}
-          autoCapitalize="none"
-          autoCorrect={false}
-        />
-        <Pressable 
-          style={[
-            styles.buttonContainer, 
-            (!username || !password) && { opacity: 0.5 }
-          ]} 
-          onPress={handleLogin} 
-          disabled={!username || !password}
+        <ScrollView 
+          contentContainerStyle={styles.scrollContainer}
+          showsVerticalScrollIndicator={false}
+          bounces={false}
+          keyboardShouldPersistTaps="handled"
         >
-          <Text style={styles.loginButtonText}>Login</Text>
-        </Pressable>
-      </ScrollView>
+          <Text style={styles.title}>Bienvenido a GlobalChat!</Text>
+          <View style={styles.imageContainer}>
+            <Image 
+              source={require('../assets/images/global.png')} 
+              style={styles.logo} 
+              resizeMode="contain" 
+            />
+          </View>
+          <TextInput
+            style={styles.input}
+            placeholder="Username"
+            placeholderTextColor="#999"
+            value={username}
+            onChangeText={setUsername}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            placeholderTextColor="#999"
+            secureTextEntry={true}
+            value={password}
+            onChangeText={setPassword}
+            autoCapitalize="none"
+            autoCorrect={false}
+          />
+          <Pressable 
+            style={[
+              styles.buttonContainer, 
+              (!username || !password) && { opacity: 0.5 }
+            ]} 
+            onPress={handleLogin} 
+            disabled={!username || !password}
+          >
+            <Text style={styles.loginButtonText}>Login</Text>
+          </Pressable>
+        </ScrollView>
       </SafeAreaView>
     </KeyboardAvoidingView>
   );
@@ -86,69 +85,55 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-    padding: 24,
-    backgroundColor: '#F5F7FA',
+    padding: SPACING.lg,
+    backgroundColor: COLORS.background,
   },
   title: {
     fontSize: 32,
     fontWeight: '700',
-    marginBottom: 24,
+    marginBottom: SPACING.lg,
     textAlign: 'center',
-    color: '#1A1A1A',
+    color: COLORS.text,
     letterSpacing: 0.5,
   },
   input: {
     height: 55,
-    borderColor: '#E1E8ED',
+    borderColor: COLORS.lightBlue,
     borderWidth: 1,
-    marginBottom: 16,
-    paddingHorizontal: 16,
+    marginBottom: SPACING.md,
+    paddingHorizontal: SPACING.md,
     borderRadius: 12,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: COLORS.white,
     fontSize: 16,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.18,
-    shadowRadius: 1.0,
-    elevation: 1,
+    ...COLORS.shadow.medium,
   },
   buttonContainer: {
-    backgroundColor: '#007AFF',
+    backgroundColor: COLORS.primary,
     borderRadius: 12,
-    paddingVertical: 16,
-    marginTop: 8,
+    paddingVertical: SPACING.lg,
+    marginTop: SPACING.sm,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    ...COLORS.shadow.medium,
   },
   loginButtonText: {
     fontSize: 18,
     fontWeight: '600',
-    color: '#FFFFFF',
+    color: COLORS.white,
     letterSpacing: 0.5,
   },
   imageContainer: {
     alignItems: 'center',
-    marginBottom: 32,
+    marginBottom: SPACING.xl,
   },
   logo: {
     width: '100%',
     height: undefined,
     aspectRatio: 1.5,
-    marginBottom: 16,
+    marginBottom: SPACING.md,
   },
   scrollContainer: {
     flexGrow: 1,
     justifyContent: 'center',
-    paddingVertical: 24,
+    paddingVertical: SPACING.lg,
   },
 });

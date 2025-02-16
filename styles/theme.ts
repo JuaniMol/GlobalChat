@@ -9,19 +9,20 @@ export const COLORS = {
         medium: {
             shadowColor: '#000',
             shadowOffset: {
-            width: 0,
-            height: 2,
+                width: 0,
+                height: 2,
             },
             shadowOpacity: 0.25,
             shadowRadius: 3.84,
             elevation: 5,
         },
     }
-  };
-  export const SPACING = {
+};
+
+export const SPACING = {
     xs: 4,
     sm: 8,
     md: 16,
     lg: 24,
     xl: 32,
-  };
+};

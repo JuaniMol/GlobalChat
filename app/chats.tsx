@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { router } from 'expo-router';
 import { Chat } from '../constants/Mocks';
 import { ChatItem } from '../components/chats/chatItem';
+import { COLORS, SPACING } from '../styles/theme';
 
 const Chats = () => {
     return (
@@ -31,32 +32,25 @@ const Chats = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5F7FA',
+        backgroundColor: COLORS.background,
     },
     tabContainer: {
-        padding: 16,
-        backgroundColor: '#007AFF',
+        padding: SPACING.md,
+        backgroundColor: COLORS.primary,
         borderBottomWidth: 0,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
+        ...COLORS.shadow.medium,
     },
     tabText: {
         fontSize: 28,
         fontWeight: '700',
-        color: '#FFFFFF',
+        color: COLORS.white,
         letterSpacing: 0.5,
     },
     editProfile: {
-        padding: 8,
+        padding: SPACING.sm,
         borderRadius: 20,
         backgroundColor: 'rgba(255, 255, 255, 0.2)',
     },
