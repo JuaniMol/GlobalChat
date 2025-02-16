@@ -23,7 +23,7 @@ export const ChatItem: React.FC<ChatItemProps> = ({ chat }) => {
         >
             <View style={styles.chatItem}>
                 <Image 
-                    source={chat.avatar ? { uri: chat.avatar } : require('../../../assets/images/default-image.png')} 
+                    source={chat.avatar ? { uri: chat.avatar } : require('../../assets/images/default-image.png')} 
                     style={styles.avatar} 
                 />
                 <View style={styles.chatInfo}>
