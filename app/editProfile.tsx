@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Image, Pressable, Platform } from 'react-native';
+import { View, Text, TextInput, StyleSheet, Image, Pressable, Platform, KeyboardAvoidingView, ScrollView, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
@@ -10,19 +10,25 @@ import { ThemedText } from '@/components/ThemedText';
 const EditProfile = () => {
     const [name, setName] = useState('');
     const [profileImage, setProfileImage] = useState<string | null>(null);
+    const [nameBefore, setNameBefore] = useState('');
+    const [initialProfileImage, setInitialProfileImage] = useState<string | null>(null);
 
     
     useEffect(() => {
         const getProfileDataFromStorage = async () => {
             try {
                 const storedUsername = await AsyncStorage.getItem('username');
+                const storedProfileImage = await AsyncStorage.getItem('profileImage');
+                
                 if (storedUsername !== null) {
                     setName(storedUsername);
+                    setNameBefore(storedUsername);
                 }
-                const storedProfileImage = await AsyncStorage.getItem('profileImage');
-                if (storedProfileImage !== null) {
-                    setProfileImage(storedProfileImage);
-                }
+                
+                // Establecemos el estado inicial de la imagen
+                setProfileImage(storedProfileImage);
+                setInitialProfileImage(storedProfileImage);
+                
             } catch (error) {
                 console.error('Failed to load profile data from storage', error);
             }
@@ -38,6 +44,8 @@ const EditProfile = () => {
             if (profileImage) {
             await AsyncStorage.setItem('profileImage', profileImage);
             }
+            Alert.alert('Perfil actualizado correctamente');
+            
         } catch (error) {
             console.error('Failed to save data to storage', error);
         }
@@ -55,7 +63,6 @@ const EditProfile = () => {
         }
 
         const result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
@@ -70,93 +77,179 @@ const EditProfile = () => {
 
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.tabContainer}>
-                <Text style={styles.header}>Editar Perfil</Text>
-            </View>
-            <View style={{ padding: 20 }}>
-            <ThemedText style= {styles.labelText}>Foto de Perfil: </ThemedText>
-                <View style={{ position: 'relative' }}>
-                    
-                <Image source={profileImage ? { uri: profileImage } : require('../assets/images/default-image.png')} style={styles.profileImage} />
-                <Pressable style={styles.cameraButton} onPress={() => {handlePickImage()}}>
-                    <Icon name="camera" style={styles.cameraIcon} />
-                </Pressable>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={Platform.OS === 'ios' ? -25 : 0}
+        >
+            <SafeAreaView style={styles.container}>
+                <View style={styles.tabContainer}>
+                    <Text style={styles.header}>Editar Perfil</Text>
                 </View>
-                <ThemedText style= {styles.labelText}>Nombre de Usuario: </ThemedText>
-                <TextInput
-                style={styles.input}
-                placeholder="Name"
-                value={name}
-                onChangeText={setName}
-                />
-                <Pressable style={styles.saveButton} onPress={handleSave}>
-                <ThemedText style={styles.cameraIcon}>Guardar</ThemedText>
-                </Pressable>
-            </View>
-            
-        </SafeAreaView>
+                <ScrollView 
+                    contentContainerStyle={styles.scrollContainer}
+                    keyboardShouldPersistTaps="handled"
+                >
+                    <View style={styles.contentContainer}>
+                        <Text style={styles.labelText}>Foto de Perfil: </Text>
+                        <View style={styles.imageContainer}>
+                            <Image 
+                                source={profileImage ? { uri: profileImage } : require('../assets/images/default-image.png')} 
+                                style={styles.profileImage} 
+                            />
+                            <Pressable style={styles.cameraButton} onPress={handlePickImage}>
+                                <Icon name="image" style={styles.cameraIcon} />
+                            </Pressable>
+                        </View>
+                        <Text style={styles.labelText}>Nombre de Usuario: </Text>
+                        <TextInput
+                            style={styles.input}
+                            value={name}
+                            onChangeText={setName}
+                        />
+                        <Pressable 
+                            style={[
+                                styles.saveButton, 
+                                { opacity: (name !== nameBefore || profileImage !== initialProfileImage) ? 1 : 0.5 }
+                            ]} 
+                            onPress={handleSave} 
+                            disabled={name === nameBefore && profileImage === initialProfileImage}
+                        >
+                            <ThemedText style={styles.saveButtonText}>Guardar</ThemedText>
+                        </Pressable>
+                    </View>
+                </ScrollView>
+            </SafeAreaView>
+        </KeyboardAvoidingView>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f5f5f5',
+  container: {
+    flex: 1,
+    backgroundColor: '#F5F7FA',
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#FFFFFF',
+    letterSpacing: 0.5,
+  },
+  tabContainer: {
+    padding: 16,
+    backgroundColor: '#007AFF',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    header: {
-        fontSize: 30,
-        fontWeight: 'bold',
-        color: 'white',
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+  },
+  contentContainer: {
+    padding: 20,
+    flex: 1,
+  },
+  imageContainer: {
+    position: 'relative',
+    alignItems: 'center',
+    marginBottom: 30,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    profileImage: {
-        width: '100%',
-        height: 300,
-        resizeMode: 'contain',
-        marginBottom: 20,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  profileImage: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+    resizeMode: 'cover',
+    borderWidth: 3,
+    borderColor: '#FFFFFF',
+  },
+  cameraButton: {
+    position: 'absolute',
+    bottom: 10,
+    right: 10,
+    backgroundColor: '#007AFF',
+    borderRadius: 25,
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    cameraButton: {
-        position: 'absolute',
-        bottom: 30,
-        right: 10,
-        zIndex: 1,
-        marginLeft: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        backgroundColor: '#007bff',
-        borderRadius: 20,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
+  },
+  cameraIcon: {
+    fontSize: 24,
+    color: '#FFFFFF',
+  },
+  labelText: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 8,
+    color: '#1A1A1A',
+    marginLeft: 4,
+  },
+  input: {
+    height: 50,
+    borderColor: '#E1E8ED',
+    borderWidth: 1,
+    marginBottom: 24,
+    paddingHorizontal: 16,
+    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    fontSize: 16,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
     },
-    cameraIcon: {
-        fontSize: 24,
-        color: 'white',
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+    elevation: 1,
+  },
+  saveButton: {
+    backgroundColor: '#007AFF',
+    borderRadius: 12,
+    paddingVertical: 16,
+    alignItems: 'center',
+    marginTop: 'auto',
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
     },
-    input: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1,
-        marginBottom: 20,
-        paddingHorizontal: 10,
-    },
-    labelText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 10,
-    },
-    saveButton: {
-        backgroundColor: '#007BFF',
-        borderRadius: 5,
-        paddingVertical: 10,
-        paddingHorizontal: 12,
-        alignItems: 'center',
-    },
-    tabContainer: {
-      padding: 10,
-      backgroundColor: 'rgb(35, 107, 214)',
-      borderBottomWidth: 1,
-      borderBottomColor: '#ccc',
-      flexDirection: 'row',
-      alignItems: 'center'
-    }
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  saveButtonText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#FFFFFF',
+    letterSpacing: 0.5,
+  }
 });
 
 export default EditProfile;

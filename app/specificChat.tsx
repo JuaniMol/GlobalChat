@@ -19,8 +19,12 @@ const SpecificChat = () => {
   const renderItem = useCallback(({ item }: { item: { sender: string; content: string; time: string; } }) => (
     // Doy estilos a los mensajes segun quien es el emisor
     <View style={[styles.messageContainer, item.sender === 'You' ? styles.myMessage : styles.otherMessage]}>
-      <Text style={styles.messageText}>{item.content}</Text>
-      <Text style={styles.messageTime}>{item.time}</Text>
+      <Text style={[styles.messageText, { color: item.sender === 'You' ? '#FFFFFF' : '#000000' }]}>
+        {item.content}
+      </Text>
+      <Text style={[styles.messageTime, { color: item.sender === 'You' ? '#E1F5FE' : '#9E9E9E' }]}>
+        {item.time}
+      </Text>
     </View>
   ), []);
 
@@ -84,79 +88,108 @@ const SpecificChat = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#E8EEF9', // Color de fondo más suave
   },
   chatContainer: {
     flex: 1,
-    padding: 10,
+    padding: 16,
   },
   messageContainer: {
-    marginVertical: 5,
-    padding: 10,
-    borderRadius: 10,
+    marginVertical: 4,
+    maxWidth: '80%',
+    padding: 12,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.18,
+    shadowRadius: 1.0,
+    elevation: 1,
   },
   myMessage: {
     alignSelf: 'flex-end',
-    backgroundColor: '#dcf8c6',
+    backgroundColor: '#007AFF', // Azul de iOS
+    borderBottomRightRadius: 4,
   },
   otherMessage: {
     alignSelf: 'flex-start',
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
+    borderBottomLeftRadius: 4,
   },
   messageText: {
     fontSize: 16,
+    lineHeight: 20,
   },
   messageTime: {
-    fontSize: 12,
-    color: '#888',
-    marginTop: 5,
+    fontSize: 11,
+    marginTop: 4,
     textAlign: 'right',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    padding: 8,
+    backgroundColor: '#FFFFFF',
     borderTopWidth: 1,
-    borderColor: '#ddd',
+    borderColor: '#E0E0E0',
   },
   input: {
     flex: 1,
-    height: 40,
-    borderColor: '#ddd',
+    minHeight: 40,
+    maxHeight: 100,
+    borderColor: '#E0E0E0',
     borderWidth: 1,
-    borderRadius: 20,
-    paddingHorizontal: 10,
-    backgroundColor: '#fff',
-  },
-  sendButton: {
-    marginLeft: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: '#007bff',
-    borderRadius: 20,
-  },
-  sendButtonText: {
-    color: '#fff',
+    borderRadius: 24,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    marginRight: 8,
+    backgroundColor: '#F5F5F5',
     fontSize: 16,
   },
+  sendButton: {
+    padding: 12,
+    backgroundColor: '#007AFF',
+    borderRadius: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
   tabContainer: {
-    padding: 10,
-    backgroundColor: 'rgb(35, 107, 214)',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
+    padding: 12,
+    backgroundColor: '#007AFF',
+    borderBottomWidth: 0,
     flexDirection: 'row',
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   tabText: {
-    fontSize: 30,
-    fontWeight: 'bold',
-    color: 'white',
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#FFFFFF',
   },
   avatar: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 10,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginRight: 12,
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
   },
 });
 
