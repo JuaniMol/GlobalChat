@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Image, Pressable, Platform, KeyboardAvoidingView, ScrollView, Alert } from 'react-native';
+import { View, TextInput, StyleSheet, Image, Pressable, Platform, KeyboardAvoidingView, ScrollView, Alert, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import * as ImagePicker from 'expo-image-picker';
 import { router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { ThemedText } from '@/components/ThemedText';
 
 const EditProfile = () => {
     const [name, setName] = useState('');
@@ -115,7 +114,7 @@ const EditProfile = () => {
                             onPress={handleSave} 
                             disabled={name === nameBefore && profileImage === initialProfileImage}
                         >
-                            <ThemedText style={styles.saveButtonText}>Guardar</ThemedText>
+                            <Text style={styles.saveButtonText}>Guardar</Text>
                         </Pressable>
                     </View>
                 </ScrollView>
