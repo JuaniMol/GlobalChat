@@ -39,8 +39,8 @@ export default function LoginScreen() {
   return (
     <KeyboardAvoidingView 
       style={styles.container} 
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-      keyboardVerticalOffset={Platform.OS === 'ios' ? -32 : -10}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined} 
+      keyboardVerticalOffset={Platform.OS === 'ios' ? -32 : undefined}
     >
       <SafeAreaView>
         <ScrollView 
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 32,
     fontWeight: '700',
-    marginBottom: SPACING.lg,
     textAlign: 'center',
     color: COLORS.text,
     letterSpacing: 0.5,
@@ -134,17 +133,14 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     alignItems: 'center',
-    marginBottom: SPACING.xl,
   },
   logo: {
     width: '100%',
     height: undefined,
     aspectRatio: 1.5,
-    marginBottom: SPACING.md,
   },
   scrollContainer: {
     flexGrow: 1,
-    justifyContent: 'center',
-    paddingVertical: SPACING.lg,
+    paddingVertical: SPACING.md,
   },
 });
